@@ -1,0 +1,24 @@
+{
+  "name": "rezeclinic-slack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:euglena1215/rezeclinic-slack.git",
+  "author": "Teppei Shintani <teppest1215@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "push": "clasp push",
+    "watch": "watch 'npm run build && npm run push' src/",
+    "build": "webpack --mode development"
+  },
+  "devDependencies": {
+    "@types/google-apps-script": "^1.0.27",
+    "@types/node": "^14.14.31",
+    "es3ify-webpack-plugin": "^0.1.0",
+    "gas-webpack-plugin": "^2.0.0",
+    "ts-loader": "^8.0.17",
+    "typescript": "^4.2.3",
+    "watch": "^1.0.2",
+    "webpack": "^5.24.3",
+    "webpack-cli": "^4.5.0"
+  }
+}
