@@ -1,4 +1,3 @@
-import Echo from "./Echo";
 import { SLACK_INCOMING_WEBHOOK, SLACK_CHANNEL_NAME, RIZE_PUSH7_URLS } from "./const"
 import { postSlack } from "./postSlack";
 
@@ -14,9 +13,6 @@ global.main = () => {
   // )
 
   Logger.log(fetchLatestRizeUpdatedAt())
-
-  const echo = new Echo();
-  echo.print("world.");
 };
 
 const fetchLatestRizeUpdatedAt = () => {
