@@ -1,23 +1,9 @@
 import { SLACK_INCOMING_WEBHOOK, SLACK_CHANNEL_NAME, RIZE_PUSH7_URLS } from "./const"
 import { postSlack } from "./postSlack";
+import { persist } from "./persist"
 
 global.main = () => {
-  // postSlack(
-  //   {
-  //     incommingUrl: SLACK_INCOMING_WEBHOOK,
-  //     channelName: SLACK_CHANNEL_NAME,
-  //     username: "リゼ通知bot",
-  //     text: "test",
-  //     iconEmoji: ":ghost:"
-  //   }
-  // )
-
-  Logger.log(fetchLatestRizeUpdatedAt())
-};
-
-const fetchLatestRizeUpdatedAt = () => {
   const names: string[] = Object.keys(RIZE_PUSH7_URLS);
-  const latestUpdatedAt = {}
   names.forEach(name => {
     const html = UrlFetchApp.fetch(RIZE_PUSH7_URLS[name], {
       method: "get",
@@ -27,9 +13,25 @@ const fetchLatestRizeUpdatedAt = () => {
       .to("</span>")
       .build()
       .replace("<span>", "")
-    
-    latestUpdatedAt[name] = updatedAt;
-  })
   
-  return latestUpdatedAt;
-}
+    const existsUpdatedAt = PropertiesService.getScriptProperties().getProperty(`latestUpdatedAt__${name}`);
+
+    if (updatedAt !== existsUpdatedAt) {
+      const body = Parser.data(html)
+        .from("<p>")
+        .to("</p>")
+        .build()
+
+      persist(`latestUpdatedAt__${name}`, updatedAt);
+      postSlack(
+        {
+          incommingUrl: SLACK_INCOMING_WEBHOOK,
+          channelName: SLACK_CHANNEL_NAME,
+          username: "リゼ通知bot",
+          text: body,
+          iconEmoji: ":bearded_person::skin-tone-2:"
+        }
+      );
+    }
+  })
+};
