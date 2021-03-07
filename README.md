@@ -1,5 +1,7 @@
 # rezeclinic-slack
 
+![](./docs/screenshot.png)
+
 ## 設定が必要なスクリプトプロパティ
 
 | name                   | 内容                                                  |
