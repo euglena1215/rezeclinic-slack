@@ -21,6 +21,7 @@ global.main = () => {
         .from("<p>")
         .to("</p>")
         .build()
+        .replace(/<a href="(.+)">(.+)<\/a>/, '<$1|$2>'); // a tag を slack のリンクに変換
 
       persist(`latestUpdatedAt__${name}`, updatedAt);
       postSlack(
